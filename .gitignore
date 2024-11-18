@@ -1,0 +1,23 @@
+# Python Bytecode
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual Environment
+venv/
+
+# Logs
+*.log
+logs/
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# IDE Configurations
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
