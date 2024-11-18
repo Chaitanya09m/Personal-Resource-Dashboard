@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Resource Dashboard</title>
+</head>
+<body>
+    <h1>Personal Resource Dashboard</h1>
+
+    <!-- System Stats Section -->
+    <h2>System Stats</h2>
+    <div id="system-stats">
+        <p>Loading system stats...</p>
+    </div>
+
+    <!-- Network Diagnostics Section -->
+    <h2>Network Diagnostics</h2>
+    <form id="ping-form" method="POST" action="/ping_host">
+        <label for="host">Host to Ping:</label>
+        <input type="text" id="host" name="host" required>
+        <button type="submit">Ping</button>
+    </form>
+    <form id="traceroute-form" method="POST" action="/traceroute">
+        <label for="traceroute-host">Host for Traceroute:</label>
+        <input type="text" id="traceroute-host" name="host" required>
+        <button type="submit">Traceroute</button>
+    </form>
+
+    <!-- JavaScript for Fetching System Stats -->
+    <script>
+        async function fetchSystemStats() {
+            console.log("Fetching system stats..."); // Debugging
+            try {
+                const response = await fetch("/system_stats");
+                const stats = await response.json();
+                console.log("System Stats:", stats); // Debugging
+                const statsDiv = document.getElementById("system-stats");
+                statsDiv.innerHTML = `
+                    <p>CPU Usage: ${stats.cpu}%</p>
+                    <p>Memory Usage: ${stats.memory}%</p>
+                    <p>Disk Usage: ${stats.disk}%</p>
+                    <p>Uptime: ${stats.uptime}</p>
+                `;
+            } catch (error) {
+                console.error("Error fetching system stats:", error);
+                const statsDiv = document.getElementById("system-stats");
+                statsDiv.innerHTML = `<p>Error fetching system stats.</p>`;
+            }
+        }
+
+        // Fetch stats every 5 seconds
+        setInterval(fetchSystemStats, 5000);
+        fetchSystemStats();
+    </script>
+</body>
+</html>
